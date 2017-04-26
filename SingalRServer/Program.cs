@@ -10,7 +10,7 @@ namespace SingalRServer
     {
         static void Main(string[] args)
         {
-            string url = "http://localhost:8080";
+            string url = "http://localhost:8082";
             using (WebApp.Start(url))
             {
                 Console.WriteLine("Server running on {0}", url);

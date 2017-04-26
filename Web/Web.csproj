@@ -108,6 +108,41 @@
     <Content Include="Scripts\jquery-1.6.4.min.js" />
     <Content Include="Scripts\jquery.signalR-2.2.1.js" />
     <Content Include="Scripts\jquery.signalR-2.2.1.min.js" />
+    <Content Include="src\.gitignore" />
+    <Content Include="src\config\webpack\environments\development.js" />
+    <Content Include="src\config\webpack\environments\production.js" />
+    <Content Include="src\config\webpack\global.js" />
+    <Content Include="src\postcss.config.js" />
+    <Content Include="src\src\app\components\footer\footer.directive.js" />
+    <Content Include="src\src\app\components\footer\footer.html" />
+    <Content Include="src\src\app\components\footer\footer.module.js" />
+    <Content Include="src\src\app\components\header\header.directive.js" />
+    <Content Include="src\src\app\components\header\header.html" />
+    <Content Include="src\src\app\components\header\header.module.js" />
+    <Content Include="src\src\app\components\league\league.directive.js" />
+    <Content Include="src\src\app\components\league\league.html" />
+    <Content Include="src\src\app\components\league\league.module.js" />
+    <Content Include="src\src\app\core\core.module.js" />
+    <Content Include="src\src\app\core\directives\validation-test\validation-test.directive.js" />
+    <Content Include="src\src\app\core\services\constants.js" />
+    <Content Include="src\src\app\core\services\resolver.provider.js" />
+    <Content Include="src\src\app\core\services\store.factory.js" />
+    <Content Include="src\src\app\index.bootstrap.js" />
+    <Content Include="src\src\app\index.components.js" />
+    <Content Include="src\src\app\index.config.js" />
+    <Content Include="src\src\app\index.module.js" />
+    <Content Include="src\src\app\index.routes.js" />
+    <Content Include="src\src\app\index.run.js" />
+    <Content Include="src\src\app\index.vendor.js" />
+    <Content Include="src\src\app\pages\main\main.controller.js" />
+    <Content Include="src\src\app\pages\main\main.html" />
+    <Content Include="src\src\app\pages\main\main.module.js" />
+    <Content Include="src\src\app\pages\main\main.route.js" />
+    <Content Include="src\src\assets\images\angular.png" />
+    <Content Include="src\src\assets\images\yeoman.png" />
+    <Content Include="src\src\assets\js\jquery.signalR-2.2.1.min.js" />
+    <Content Include="src\src\favicon.ico" />
+    <Content Include="src\webpack.config.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +158,14 @@
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="src\config\manifest.json" />
+    <Content Include="src\src\app\components\footer\footer.scss" />
+    <Content Include="src\src\app\components\header\header.scss" />
+    <Content Include="src\src\app\components\league\league.scss" />
+    <Content Include="src\src\assets\styles\sass\index.scss" />
+    <Content Include="src\src\tpl-index.ejs" />
+    <Content Include="src\.babelrc" />
+    <Content Include="src\package.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -133,7 +176,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="src\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
