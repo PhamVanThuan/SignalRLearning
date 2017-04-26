@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Models.Sportative
+namespace Models.Models
 {
     public class League
     {

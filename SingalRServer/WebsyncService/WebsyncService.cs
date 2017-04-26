@@ -24,7 +24,10 @@ namespace SingalRServer.WebsyncService
             _client = new Client(_configuration.GetSetting(SignalrServerConstants.GenesisUrl));
             _client.Connect(new ConnectArgs
             {
-                OnSuccess = e => { Console.WriteLine("Websync connected"); },
+                OnSuccess = e =>
+                {
+                    Console.WriteLine("Websync connected");
+                },
                 OnFailure = e =>
                 {
                     Console.WriteLine(e.ErrorMessage);
@@ -51,11 +54,17 @@ namespace SingalRServer.WebsyncService
                 {
                     OnSuccess = data =>
                     {
+                        Console.WriteLine($"{channelName}: OnSuccess");
                         var message = FromJson<ReceiveData>(data.GetExtensionValueJson("data"));
                         callback(message);
                     },
+                    OnFailure = data =>
+                    {
+                        Console.WriteLine($"{channelName} OnFailure");
+                    },
                     OnReceive = data =>
                     {
+                        Console.WriteLine($"{channelName} OnReceive");
                         var message = FromJson<ReceiveData>(data.DataJson);
                         callback(message);
                     }

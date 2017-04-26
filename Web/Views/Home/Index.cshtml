@@ -14,19 +14,29 @@
     $(function() {
         $.connection.hub.url = "http://localhost:8080/s";
         var soccerHub = $.connection.soccerHub;
+        var _events = [];
+
+        soccerHub.client.updateEvents = function(data) {
+            console.log("added: " + data.EventId);
+            _events.push(data);
+        }
+
+        soccerHub.client.removeEvents = function (data) {
+            console.log("remove: " + data.EventId);
+        }
 
         $.connection.hub.start().then(init);
 
         function init() {
             return soccerHub.server.getEvents()
-                    .done(function (events) {
-                        $.each(events,
-                            function () {
-                                console.log(this);
-                            });
-                    });
+                .done(function(events) {
+                    for (var i = 0; i < events.length; i++) {
+                        _events.push(events[i]);
+                        console.log(events[i].EventId);
+                    }
+                });
         }
-        
+
     });
 </script>
 <div id="events"></div>

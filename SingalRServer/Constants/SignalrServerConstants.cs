@@ -8,10 +8,11 @@ namespace SingalRServer.Constants
 {
     public static class SignalrServerConstants
     {
-        public static string GenesisUrl = "GenesisURL";
-        public static string GenesisSn = "GenesisSN";
-        public static string GenesisSk = "GenesisSK";
+        public const string GenesisUrl = "GenesisURL";
+        public const string GenesisSn = "GenesisSN";
+        public const string GenesisSk = "GenesisSK";
 
-        public static string EventsChannel = "EventsChannel";
+        public const string EventsChannel = "EventsChannel";
+        public const string PricesChannel = "EventsChannel";
     }
 }

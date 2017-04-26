@@ -2,7 +2,7 @@
 
 namespace Models.Sportative
 {
-    public class PriceData
+    public class PriceDataJson
     {
         public DateTime TimeStamp1 { get; set; }
         public DateTime TimeStamp2 { get; set; }
@@ -25,7 +25,7 @@ namespace Models.Sportative
 
         //public MatchInformation MatchInformation { get; set; }
 
-        public PriceData(string[] data)
+        public PriceDataJson(string[] data)
         {
             TimeStamp1 = Convert.ToDateTime(data[0]);
             TimeStamp2 = Convert.ToDateTime(data[1]);

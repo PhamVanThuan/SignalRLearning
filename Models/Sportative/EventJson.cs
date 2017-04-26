@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Models.Sportative
 {
     [DataContract]
-    public class Event
+    public class EventJson
     {
         public DateTime TimeStamp1 { get; set; }
         public DateTime TimeStamp2 { get; set; }
@@ -18,7 +18,7 @@ namespace Models.Sportative
         public DateTime MatchStartTime { get; set; }
         public int NeutralGround { get; set; }
 
-        public Event(string[] data)
+        public EventJson(string[] data)
         {
             TimeStamp1 = Convert.ToDateTime(data[0]);
             TimeStamp2 = Convert.ToDateTime(data[1]);

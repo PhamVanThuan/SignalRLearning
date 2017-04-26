@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Hubs;
+using Models.Models;
 using Models.Sportative;
 using Newtonsoft.Json;
 using SingalRServer.Configuration;
@@ -18,13 +19,14 @@ namespace SingalRServer.Soccer
         private readonly IWebsynService _websynService;
         private readonly IConfiguration _configuration;
         private readonly ConcurrentDictionary<string, Event> _events = new ConcurrentDictionary<string, Event>();
+        private readonly ConcurrentDictionary<string, League> _leagues = new ConcurrentDictionary<string, League>();
+
+        private readonly ConcurrentDictionary<string, PriceDataJson> _prices =
+            new ConcurrentDictionary<string, PriceDataJson>();
+
         private const string SportType = "0";
 
-        private IHubConnectionContext<dynamic> Clients
-        {
-            get;
-            set;
-        }
+        private IHubConnectionContext<dynamic> Clients { get; set; }
 
         public Soccer(IHubConnectionContext<dynamic> client, IWebsynService websynService, IConfiguration configuration)
         {
@@ -32,6 +34,34 @@ namespace SingalRServer.Soccer
             _configuration = configuration;
             Clients = client;
             LoadEvents();
+            //LoadPrices();
+        }
+
+        private void LoadPrices()
+        {
+            var channelName = string.Format(_configuration.GetSetting(SignalrServerConstants.PricesChannel), SportType,
+                0, 1);
+            _websynService.Subscrible(channelName, ReceivePriceData);
+        }
+
+        private void ReceivePriceData(ReceiveData data)
+        {
+            if (!string.IsNullOrEmpty(data.Data))
+            {
+                List<PriceDataJson> prices = JsonConvert.DeserializeObject<string[]>(data.Data)
+                    .Select(d => new PriceDataJson(d.Split(';')))
+                    .ToList();
+                if (data.Action.StartsWith("rm-ev", StringComparison.Ordinal))
+                {
+                    //remove events
+                }
+                else
+                {
+                    foreach (var priceData in prices)
+                    {
+                    }
+                }
+            }
         }
 
         private void LoadEvents()
@@ -42,31 +72,46 @@ namespace SingalRServer.Soccer
 
         private void ReceiveData(ReceiveData data)
         {
-            Console.WriteLine("Receive data");
             if (!string.IsNullOrEmpty(data.Data))
             {
-                List<Event> events = JsonConvert.DeserializeObject<string[]>(data.Data)
-                    .Select(d => new Event(d.Split(';')))
+                List<EventJson> events = JsonConvert.DeserializeObject<string[]>(data.Data)
+                    .Select(d => new EventJson(d.Split(';')))
                     .ToList();
                 if (data.Action.StartsWith("rm-ev", StringComparison.Ordinal))
                 {
-                    //remove events
+                    foreach (var ev in events)
+                    {
+                        if (_events.ContainsKey(ev.EventId))
+                        {
+                            Event eventRemoved;
+                            _events.TryRemove(ev.EventId, out eventRemoved);
+                            Console.WriteLine($"Event {eventRemoved.EventId} was removed");
+                            Clients.All.removeEvent(eventRemoved);
+                        }
+                    }
                 }
                 else
                 {
                     foreach (var ev in events)
                     {
-                        if (_events.Values.Count > 0)
+                        if (!_events.ContainsKey(ev.EventId))
                         {
-                            if (!_events.ContainsKey(ev.EventId))
+                            var newEvent = new Event
                             {
-                                _events.TryAdd(ev.EventId, ev);
-                                Clients.All.updateEvents(ev);
-                            }
-                        }
-                        else
-                        {
-                            _events.TryAdd(ev.EventId, ev);
+                                EventId = ev.EventId,
+                                AwayTeam = ev.AwayTeam,
+                                HomeTeam = ev.HomeTeam,
+                                LeagueId = ev.LeagueId,
+                                LeagueName = ev.LeagueName,
+                                MarketId = ev.MarketId,
+                                SportId = ev.SportId,
+                                MatchStartTime = ev.MatchStartTime,
+                                NeutralGround = ev.NeutralGround,
+                                TimeStamp1 = ev.TimeStamp1,
+                                TimeStamp2 = ev.TimeStamp2
+                            };
+                            _events.TryAdd(ev.EventId, newEvent);
+                            Clients.All.updateEvents(newEvent);
                         }
                     }
                 }
@@ -76,6 +121,11 @@ namespace SingalRServer.Soccer
         public IEnumerable<Event> GetEvents()
         {
             return _events.Values;
+        }
+
+        public IEnumerable<PriceDataJson> GetPricesData()
+        {
+            return _prices.Values;
         }
     }
 }
