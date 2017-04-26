@@ -1,5 +1,9 @@
-﻿using Ninject.Modules;
+﻿using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.AspNet.SignalR.Infrastructure;
+using Ninject.Modules;
 using SingalRServer.Configuration;
+using SingalRServer.Hubs;
+using SingalRServer.Soccer;
 using SingalRServer.WebsyncService;
 
 namespace SingalRServer
@@ -8,8 +12,8 @@ namespace SingalRServer
     {
         public override void Load()
         {
-            Bind<IConfiguration>().To<Configuration.Configuration>();
-            Bind<IWebsynService>().To<WebsyncService.WebsyncService>().InSingletonScope();
+            
+
         }
     }
 }

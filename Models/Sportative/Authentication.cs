@@ -1,4 +1,6 @@
-﻿namespace Models.Sportative
+﻿using System.Runtime.Serialization;
+
+namespace Models.Sportative
 {
     [DataContract]
     public class Authentication

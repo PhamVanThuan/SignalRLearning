@@ -11,5 +11,7 @@ namespace SingalRServer.Constants
         public static string GenesisUrl = "GenesisURL";
         public static string GenesisSn = "GenesisSN";
         public static string GenesisSk = "GenesisSK";
+
+        public static string EventsChannel = "EventsChannel";
     }
 }
