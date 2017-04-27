@@ -31,8 +31,22 @@ function leagueComponent($log) {
         
 
         connection.start().done(function(){
-           console.log(connection.id);
+            console.log("connected: " + connection.id);
+            console.log(soccerHub);
+            soccerHub.on('updateEvents', function(data){
+                console.log(data);
+            });
+
+            
+            soccerHub.invoke('getEvents', function(data){
+                console.log(data);
+            });
+            
         });
+
+        function init() { 
+            
+        }
 
     });
 
