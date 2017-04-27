@@ -20,30 +20,19 @@ function leagueComponent($log) {
 
 
     $(function() {
-        $.connection.hub.url = "http://localhost:8082/s";
-        var soccerHub = $.connection.soccerHub;
+        //$.connection.hub.url = "";
+        //var soccerHub = $.connection.soccerHub;
         var _events = [];
 
-        soccerHub.client.updateEvents = function(data) {
-            console.log("added: " + data.EventId);
-            _events.push(data);
-        }
 
-        soccerHub.client.removeEvents = function (data) {
-            console.log("remove: " + data.EventId);
-        }
+        var connection = $.hubConnection("http://localhost:8082/s");
+        var soccerHub = connection.createHubProxy("soccerHub");
 
-        $.connection.hub.start().then(init);
+        
 
-        function init() {
-            return soccerHub.server.getEvents()
-                .done(function(events) {
-                    for (var i = 0; i < events.length; i++) {
-                        _events.push(events[i]);
-                        console.log(events[i].EventId);
-                    }
-                });
-        }
+        connection.start().done(function(){
+           console.log(connection.id);
+        });
 
     });
 

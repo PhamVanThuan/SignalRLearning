@@ -24,6 +24,8 @@ import "jquery";
 
 import "restangular";
 
+import "signalr";
+
 
 
 // local scripts
