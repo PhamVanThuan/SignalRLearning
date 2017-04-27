@@ -22,35 +22,27 @@ function leagueComponent($log) {
     $(function() {
         //$.connection.hub.url = "";
         //var soccerHub = $.connection.soccerHub;
-        var _events = [];
-
-
-        var connection = $.hubConnection("http://localhost:8082/s");
+        this._events = [];
+        var self = this;
+        this.aa = "thuan";
+        var connection = $.hubConnection("http://localhost:8082/s/hubs");
         var soccerHub = connection.createHubProxy("soccerHub");
 
-        
+         soccerHub.on('updateEvents', function(event){
+                self._events.push(event);
+            });
 
         connection.start().done(function(){
             console.log("connected: " + connection.id);
-            console.log(soccerHub);
-            soccerHub.on('updateEvents', function(data){
-                console.log(data);
+        
+            soccerHub.invoke('getEvents').done(function(events){
+                for (var i = 0; i < events.length; i++) {
+                        self._events.push(events[i]);
+                    }
             });
-
-            
-            soccerHub.invoke('getEvents', function(data){
-                console.log(data);
-            });
-            
         });
 
-        function init() { 
-            
-        }
-
     });
-
-
   }
 
 }
